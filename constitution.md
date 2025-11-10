@@ -106,7 +106,7 @@ When this Constitution is active, AI builders (e.g., Copilot, GPT) must:
 - Load the Constitution before coding sessions.
 - Receive current phase, component name, and priority list as prompts.
 - Produce documented code with rationale for design choices.
-- - Respect simplicity, clarity, and maintainability.
+- Respect simplicity, clarity, and maintainability.
 
 Example directive:
 
@@ -153,56 +153,6 @@ Example directive:
 A feature is complete when:
 
 - Functional, accessible, documented, and tested.
-- Lighthouse accessibility ≥ 90%.
-- Code follows naming conventions and structure.
-- Commit message uses conventional commits.
-
-Example directive:
-
-> "You are building the TaskBoard.tsx component for WeddingUp.
-> Follow the Constitution. Implement a Kanban board using Shadcn components and Supabase data.
-> > Keep code <200 lines. Include comments for decisions."
-
----
-
-## 8. Phased Development Plan
-
-**Phase 1 — MVP**
-- Auth + roles
-- Create/manage wedding projects
-- Task CRUD + board UI
-- File upload
-- Notifications
-- Dashboard UI
-
-**Phase 2 — Collaboration Layer**
-- Comments & chat
-- Role-based views
-- Shared timelines
-- Vendor invites
-
-**Phase 3 — SaaS Expansion**
-- Stripe billing
-- Admin portal for planners
-- AI "auto wedding plan" assistant
-
----
-
-## 9. AI Behavior Rules
-- No unnecessary dependencies.
-- Document every new function (inputs, outputs, side effects).
-- Validate and sanitize user input.
-- Use accessible, responsive UI (ARIA + Tailwind best practices).
-- Create reusable logic hooks (useTasks, useWeddings, useUploads).
-- Ensure each commit builds and runs locally without manual config.
-
----
-
-## 10. Definition of Done
-A feature is complete when:
-
-- Functional, accessible, documented, and tested.
-
 - Lighthouse accessibility ≥ 90%.
 - Code follows naming conventions and structure.
 - Commit message uses conventional commits.
