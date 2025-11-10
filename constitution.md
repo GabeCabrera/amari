@@ -169,4 +169,4 @@ A feature is complete when:
 
 **Author:** Gabriel Cabrera  
 **Version:** 1.0  
-**License:** Open for internal AI-assisted development of WeddingUp.
+**License:** Open for internal AI-assisted development of Amari.
