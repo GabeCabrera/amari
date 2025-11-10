@@ -1,0 +1,82 @@
+{
+  "name": "WeddingUp Frontend Context Injection",
+  "version": "1.0",
+  "description": "Condensed context for AI-assisted frontend development of the WeddingUp app — a modern, emotionally intelligent wedding-planning platform inspired by ClickUp and Notion.",
+  "context": {
+    "purpose": "Guide Copilot or any AI assistant in making frontend design and UI decisions consistent with the WeddingUp brand and design philosophy.",
+    "core_stack": {
+      "framework": "Next.js (App Router)",
+      "styling": "TailwindCSS + Shadcn/UI",
+      "state_management": "React hooks and context",
+      "backend": "Supabase (auth, database, storage, realtime)"
+    },
+    "visual_style": {
+      "theme_keywords": ["romantic", "calm", "professional", "joyful", "human-centered"],
+      "layout": "clean, card-based interface with fixed navbar and contextual sidebar",
+      "motion": "gentle ease-in-out transitions, 150-250ms animations, fade-slide page changes",
+      "spacing": "24px desktop, 16px tablet, 8px mobile scale"
+    },
+    "color_palette": {
+      "primary": { "name": "Blush Rose", "hex": "#EFB7B7", "intent": "Romantic warmth and human connection" },
+      "secondary": { "name": "Sage Mist", "hex": "#C9D6CF", "intent": "Calm neutrality and balance" },
+      "accent": { "name": "Gold Glow", "hex": "#F5C16C", "intent": "Optimism, celebration, and focus" },
+      "background": { "name": "Porcelain", "hex": "#F8F8F8", "intent": "Airy white space for clarity" },
+      "text_primary": { "hex": "#2E2E2E" },
+      "text_muted": { "hex": "#6E6E6E" },
+      "success": { "hex": "#9ED9C5" },
+      "error": { "hex": "#C97070" },
+      "highlight": { "hex": "#E6D9FF" }
+    },
+    "typography": {
+      "heading": "Playfair Display or Cormorant Garamond (serif)",
+      "body": "Inter or Nunito Sans (sans-serif)",
+      "contrast": "Bold serif headers (600-700 weight) with light body (300-400 weight)"
+    },
+    "components": {
+      "buttons": {
+        "style": "rounded-lg, minimal shadows, primary blush with gold hover",
+        "rules": [
+          "Always use descriptive text",
+          "Icons optional; enhance only",
+          "Maintain accessible color contrast"
+        ]
+      },
+      "cards": {
+        "style": "white/porcelain background, subtle border, soft shadow",
+        "hover": "2% scale-up or lavender tint"
+      },
+      "forms": {
+        "style": "rounded inputs, lavender focus border, teal success, rosewood error"
+      },
+      "modals": {
+        "background": "15% opacity blur overlay",
+        "motion": "fade-in, soft scale-up"
+      }
+    },
+    "accessibility": {
+      "contrast_ratio": "WCAG AA minimum",
+      "keyboard_nav": true,
+      "screen_reader_labels": true,
+      "text_scaling": "up to 125%"
+    },
+    "development_principles": [
+      "Simplicity > cleverness",
+      "Maintain atomic component hierarchy (atoms → molecules → organisms)",
+      "Keep logic minimal in frontend; delegate data ops to Supabase/API routes",
+      "Document all components with prop definitions and usage examples",
+      "Comment design intent, not redundant code"
+    ],
+    "definition_of_done": [
+      "Visually aligned with design system",
+      "Fully responsive and accessible",
+      "Connected to live Supabase data",
+      "Documented and tested for layout consistency"
+    ],
+    "future_hooks": [
+      "Light/Dark theme toggle",
+      "AI task generation panel",
+      "Timeline visualizer (wedding countdown)",
+      "Vendor chat overlay"
+    ]
+  }
+}
