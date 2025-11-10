@@ -62,7 +62,7 @@ export default function SignupPage() {
       <div className="absolute top-20 right-20 w-32 h-32 bg-[#E6D9FF]/10 rounded-full blur-3xl animate-float" />
       <div className="absolute bottom-20 left-20 w-40 h-40 bg-[#F5C16C]/10 rounded-full blur-3xl animate-float-delayed" />
       
-      <Card className="relative z-10 w-full max-w-md glass-card border-white/30 animate-fade-in">
+      <Card className="relative z-10 w-full max-w-md glass-card border-white/15 animate-fade-in">
         <CardHeader className="space-y-1">
           <CardTitle className="text-3xl font-serif text-[#2E2E2E]">Create an account</CardTitle>
           <CardDescription className="text-[#6E6E6E]">
@@ -72,7 +72,7 @@ export default function SignupPage() {
         <form onSubmit={handleSignup}>
           <CardContent className="space-y-4">
             {error && (
-              <div className="rounded-xl bg-[#C97070]/10 border border-[#C97070]/30 backdrop-blur-sm p-3 text-sm text-[#C97070]">
+              <div className="rounded-xl bg-[#C97070]/10 border border-[#C97070]/20 backdrop-blur-xl p-3 text-sm text-[#C97070]">
                 {error}
               </div>
             )}
@@ -122,7 +122,7 @@ export default function SignupPage() {
                 <SelectTrigger className="glass-input rounded-xl">
                   <SelectValue placeholder="Select your role" />
                 </SelectTrigger>
-                <SelectContent className="glass-card border-white/30">
+                <SelectContent className="glass-card border-white/15">
                   <SelectItem value="couple">Couple (Planning my own wedding)</SelectItem>
                   <SelectItem value="planner">Planner (Managing client weddings)</SelectItem>
                   <SelectItem value="vendor">Vendor (Service provider)</SelectItem>

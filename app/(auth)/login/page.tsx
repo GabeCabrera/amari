@@ -48,7 +48,7 @@ export default function LoginPage() {
       <div className="absolute top-20 left-20 w-32 h-32 bg-[#EFB7B7]/10 rounded-full blur-3xl animate-float" />
       <div className="absolute bottom-20 right-20 w-40 h-40 bg-[#C9D6CF]/10 rounded-full blur-3xl animate-float-delayed" />
       
-      <Card className="relative z-10 w-full max-w-md glass-card border-white/30 animate-fade-in">
+      <Card className="relative z-10 w-full max-w-md glass-card border-white/15 animate-fade-in">
         <CardHeader className="space-y-1">
           <CardTitle className="text-3xl font-serif text-[#2E2E2E]">Welcome back</CardTitle>
           <CardDescription className="text-[#6E6E6E]">
@@ -58,7 +58,7 @@ export default function LoginPage() {
         <form onSubmit={handleLogin}>
           <CardContent className="space-y-4">
             {error && (
-              <div className="rounded-xl bg-[#C97070]/10 border border-[#C97070]/30 backdrop-blur-sm p-3 text-sm text-[#C97070]">
+              <div className="rounded-xl bg-[#C97070]/10 border border-[#C97070]/20 backdrop-blur-xl p-3 text-sm text-[#C97070]">
                 {error}
               </div>
             )}

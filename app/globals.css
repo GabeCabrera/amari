@@ -121,26 +121,26 @@
   }
 }
 
-/* Glassmorphism Utilities */
+/* Glassmorphism Utilities - iOS Style */
 @layer utilities {
   .glass {
-    @apply bg-white/70 backdrop-blur-md border border-white/20 shadow-lg;
+    @apply bg-white/30 backdrop-blur-2xl border border-white/10 shadow-lg;
   }
   
   .glass-card {
-    @apply bg-white/60 backdrop-blur-xl border border-white/30 shadow-xl rounded-2xl;
+    @apply bg-white/20 backdrop-blur-3xl border border-white/15 shadow-2xl rounded-2xl;
   }
   
   .glass-nav {
-    @apply bg-white/80 backdrop-blur-lg border-b border-white/20 shadow-sm;
+    @apply bg-white/40 backdrop-blur-2xl border-b border-white/10 shadow-sm;
   }
   
   .glass-button {
-    @apply bg-white/50 backdrop-blur-md border border-white/30 hover:bg-white/70 transition-all duration-200;
+    @apply bg-white/25 backdrop-blur-xl border border-white/20 hover:bg-white/40 transition-all duration-200;
   }
   
   .glass-input {
-    @apply bg-white/40 backdrop-blur-sm border border-white/30 focus:bg-white/60 focus:border-[#E6D9FF] transition-all duration-200;
+    @apply bg-white/20 backdrop-blur-xl border border-white/20 focus:bg-white/30 focus:border-[#E6D9FF]/50 transition-all duration-200;
   }
 
   /* Gradient backgrounds */

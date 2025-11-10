@@ -50,20 +50,20 @@ async function DashboardNav() {
             <div className="hidden md:flex items-center gap-6">
               <Link 
                 href="/dashboard" 
-                className="text-[#6E6E6E] hover:text-[#EFB7B7] font-medium transition-all duration-200 px-3 py-2 rounded-lg hover:bg-white/50"
+                className="text-[#6E6E6E] hover:text-[#EFB7B7] font-medium transition-all duration-200 px-3 py-2 rounded-lg hover:bg-white/30"
               >
                 Dashboard
               </Link>
               <Link 
                 href="/dashboard/weddings" 
-                className="text-[#6E6E6E] hover:text-[#EFB7B7] font-medium transition-all duration-200 px-3 py-2 rounded-lg hover:bg-white/50"
+                className="text-[#6E6E6E] hover:text-[#EFB7B7] font-medium transition-all duration-200 px-3 py-2 rounded-lg hover:bg-white/30"
               >
                 Weddings
               </Link>
               {profile?.role === 'planner' && (
                 <Link 
                   href="/dashboard/vendors" 
-                  className="text-[#6E6E6E] hover:text-[#EFB7B7] font-medium transition-all duration-200 px-3 py-2 rounded-lg hover:bg-white/50"
+                  className="text-[#6E6E6E] hover:text-[#EFB7B7] font-medium transition-all duration-200 px-3 py-2 rounded-lg hover:bg-white/30"
                 >
                   Vendors
                 </Link>
@@ -75,14 +75,14 @@ async function DashboardNav() {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="relative h-10 w-10 rounded-full hover:scale-110 transition-transform">
-                  <Avatar className="h-10 w-10 ring-2 ring-white/30">
+                  <Avatar className="h-10 w-10 ring-2 ring-white/20">
                     <AvatarFallback className="bg-gradient-to-br from-[#EFB7B7] to-[#F5C16C] text-white font-semibold shadow-lg">
                       {initials}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56 glass-card border-white/30" align="end" forceMount>
+              <DropdownMenuContent className="w-56 glass-card border-white/15" align="end" forceMount>
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
                     <p className="text-sm font-medium leading-none text-[#2E2E2E]">{profile?.full_name}</p>
@@ -94,12 +94,12 @@ async function DashboardNav() {
                     </p>
                   </div>
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator className="bg-white/20" />
-                <DropdownMenuItem asChild className="hover:bg-white/50 cursor-pointer">
+                <DropdownMenuSeparator className="bg-white/10" />
+                <DropdownMenuItem asChild className="hover:bg-white/30 cursor-pointer">
                   <Link href="/dashboard/settings">Settings</Link>
                 </DropdownMenuItem>
-                <DropdownMenuSeparator className="bg-white/20" />
-                <DropdownMenuItem asChild className="hover:bg-white/50 cursor-pointer">
+                <DropdownMenuSeparator className="bg-white/10" />
+                <DropdownMenuItem asChild className="hover:bg-white/30 cursor-pointer">
                   <form action={handleSignOut}>
                     <button type="submit" className="w-full text-left text-[#C97070]">
                       Sign out
