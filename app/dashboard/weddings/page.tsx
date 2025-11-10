@@ -50,7 +50,7 @@ export default async function WeddingsPage() {
               href={`/dashboard/weddings/${wedding.id}`}
               className="block"
             >
-              <div className="bg-white rounded-lg shadow-sm border border-[#C9D6CF]/30 p-6 hover:shadow-md hover:border-[#EFB7B7] transition-all">
+              <div className="glass-card p-6 hover:scale-105 hover:shadow-2xl transition-all duration-200">
                 <h3 className="text-xl font-semibold text-[#2E2E2E] mb-2">{wedding.name}</h3>
                 {wedding.description && (
                   <p className="text-[#6E6E6E] text-sm mb-3 line-clamp-2">{wedding.description}</p>
@@ -64,7 +64,7 @@ export default async function WeddingsPage() {
                     })}
                   </p>
                 )}
-                <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#C9D6CF]/20 text-[#2E2E2E] capitalize">
+                <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-[#C9D6CF]/30 to-[#E6D9FF]/30 text-[#2E2E2E] capitalize backdrop-blur-sm">
                   {wedding.status}
                 </span>
               </div>
@@ -72,7 +72,7 @@ export default async function WeddingsPage() {
           ))}
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow-sm border border-[#C9D6CF]/30 p-12 text-center">
+        <div className="glass-card p-12 text-center animate-fade-in">
           <h3 className="text-xl font-semibold text-[#2E2E2E] mb-2">No weddings yet</h3>
           <p className="text-[#6E6E6E] mb-6">Create your first wedding project to get started</p>
           <Button 
