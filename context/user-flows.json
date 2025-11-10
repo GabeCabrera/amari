@@ -1,0 +1,565 @@
+{
+  "name": "Amari User Flows & Permissions",
+  "version": "1.0",
+  "description": "Comprehensive user journeys, permissions matrix, and interaction patterns for the Amari wedding planning platform.",
+  
+  "primary_user_model": {
+    "planner_account": {
+      "description": "Professional/business tier user",
+      "capabilities": [
+        "Manage multiple weddings (multiple couples as clients)",
+        "Full admin/creator powers on owned weddings",
+        "Access to vendor marketplace/directory",
+        "AI-powered vendor search and recommendations (Phase 3)"
+      ]
+    },
+    "couple_account": {
+      "description": "Consumer tier user with dual modes",
+      "modes": {
+        "self_planning_mode": {
+          "description": "Couple acts as their own planner",
+          "capabilities": [
+            "Full control of their one wedding",
+            "Create/manage tasks, files, timeline",
+            "Can optionally invite a planner later (transfers to client mode)"
+          ]
+        },
+        "client_mode": {
+          "description": "Couple has planner managing their wedding",
+          "capabilities": [
+            "Editor permissions on their wedding",
+            "Can complete assigned tasks",
+            "Can upload files and view all content",
+            "Cannot delete wedding or change core settings"
+          ]
+        }
+      }
+    },
+    "vendor_account": {
+      "description": "Marketplace/directory listing (like Airbnb)",
+      "capabilities": [
+        "Profile visible to planners in vendor directory",
+        "Planners can browse/search/discover vendors",
+        "No direct wedding project access in MVP",
+        "Future: Can be invited to specific weddings (Phase 2)"
+      ]
+    }
+  },
+
+  "core_user_journeys": {
+    "journey_1_planner_creates_wedding": {
+      "name": "Planner Creates Wedding for Client",
+      "priority": "MVP - Critical Path",
+      "steps": [
+        {
+          "step": 1,
+          "action": "Planner signs up / logs in",
+          "details": "Supabase auth, role='planner' set on first login or during onboarding"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to dashboard, click 'Create New Wedding'",
+          "details": "Opens wedding creation modal/page"
+        },
+        {
+          "step": 3,
+          "action": "Choose creation method",
+          "options": [
+            "Select from templates (6-month timeline, destination wedding, intimate ceremony)",
+            "Start with blank canvas"
+          ],
+          "details": "Template pre-populates tasks; blank canvas starts empty"
+        },
+        {
+          "step": 4,
+          "action": "Fill wedding details",
+          "fields": [
+            "Wedding name (e.g., 'Sarah & Tom's Wedding')",
+            "Wedding date",
+            "Description (optional)"
+          ]
+        },
+        {
+          "step": 5,
+          "action": "Create wedding",
+          "technical": "POST /api/weddings, planner becomes owner_id"
+        },
+        {
+          "step": 6,
+          "action": "Invite couple via magic link",
+          "details": "Generate invitation token with embedded role, send via email",
+          "technical": "Token format: ?invite=abc123&role=couple&wedding_id=xyz"
+        },
+        {
+          "step": 7,
+          "action": "Couple receives email, clicks link",
+          "details": "Frictionless onboarding - no pre-registration needed"
+        },
+        {
+          "step": 8,
+          "action": "Couple creates account (if new) or logs in",
+          "technical": "Token validates, auto-adds user to wedding_members as 'editor'"
+        },
+        {
+          "step": 9,
+          "action": "Couple lands in wedding dashboard",
+          "details": "Can now see tasks, files, timeline in client mode"
+        }
+      ],
+      "edge_cases": [
+        "What if couple email already exists? → Link still works, just adds to wedding_members",
+        "What if token expires? → Planner can regenerate from wedding settings",
+        "What if couple already has account as planner? → System allows, user now has both roles"
+      ]
+    },
+
+    "journey_2_couple_self_planning": {
+      "name": "Couple Creates Their Own Wedding (Self-Planning Mode)",
+      "priority": "MVP - Secondary Path",
+      "steps": [
+        {
+          "step": 1,
+          "action": "Couple signs up / logs in",
+          "details": "Supabase auth, role='couple' set by default"
+        },
+        {
+          "step": 2,
+          "action": "Navigate to dashboard, click 'Create New Wedding'",
+          "details": "Same UI as planner, no distinction yet"
+        },
+        {
+          "step": 3,
+          "action": "Choose creation method",
+          "options": [
+            "Select from templates",
+            "Start with blank canvas"
+          ]
+        },
+        {
+          "step": 4,
+          "action": "Fill wedding details and create",
+          "technical": "POST /api/weddings, couple becomes owner_id"
+        },
+        {
+          "step": 5,
+          "action": "Couple manages wedding independently",
+          "details": "Full owner permissions - create tasks, upload files, etc."
+        },
+        {
+          "step": 6,
+          "action": "Optional: Invite planner later",
+          "flow": "Couple generates magic link for planner, planner gets added as 'editor'",
+          "note": "Couple remains owner_id, does NOT transfer to client mode unless explicitly changed"
+        }
+      ],
+      "future_consideration": "Add 'Transfer Ownership' feature to let couple hand off to planner"
+    },
+
+    "journey_3_vendor_discovery": {
+      "name": "Planner Discovers Vendors (Marketplace Model)",
+      "priority": "Phase 2/3",
+      "steps": [
+        {
+          "step": 1,
+          "action": "Planner navigates to 'Vendor Directory'",
+          "details": "Browse/search interface similar to Airbnb listings"
+        },
+        {
+          "step": 2,
+          "action": "Search/filter vendors",
+          "filters": [
+            "Category (photographer, caterer, florist, etc.)",
+            "Location",
+            "Price range",
+            "Availability",
+            "Ratings"
+          ]
+        },
+        {
+          "step": 3,
+          "action": "View vendor profile",
+          "details": "Portfolio, reviews, contact info, booking calendar"
+        },
+        {
+          "step": 4,
+          "action": "AI-powered recommendations (Phase 3)",
+          "details": "Planner asks 'Find photographers in Austin under $3k' → AI returns ranked results"
+        },
+        {
+          "step": 5,
+          "action": "Contact vendor externally (email/text)",
+          "note": "No in-app messaging for MVP"
+        },
+        {
+          "step": 6,
+          "action": "Future: Invite vendor to wedding project",
+          "details": "Vendor gets limited 'viewer' access to relevant tasks/files only"
+        }
+      ]
+    }
+  },
+
+  "permissions_matrix": {
+    "description": "What each role/permission level can do within a wedding project",
+    "roles": {
+      "planner_owner": {
+        "description": "Planner who created the wedding",
+        "permissions": {
+          "weddings": ["create", "read", "update", "delete", "transfer_ownership"],
+          "tasks": ["create", "read", "update", "delete", "assign"],
+          "files": ["upload", "read", "delete"],
+          "members": ["invite", "remove", "change_roles"],
+          "settings": ["edit_wedding_details", "change_status"]
+        }
+      },
+      "couple_owner": {
+        "description": "Couple in self-planning mode (they created the wedding)",
+        "permissions": {
+          "weddings": ["read", "update", "delete"],
+          "tasks": ["create", "read", "update", "delete", "assign"],
+          "files": ["upload", "read", "delete"],
+          "members": ["invite", "remove"],
+          "settings": ["edit_wedding_details"]
+        }
+      },
+      "couple_client_editor": {
+        "description": "Couple in client mode (planner managing their wedding)",
+        "permissions": {
+          "weddings": ["read"],
+          "tasks": ["read", "update_own_tasks", "complete_assigned"],
+          "files": ["upload", "read"],
+          "members": ["view_only"],
+          "settings": ["view_only"]
+        },
+        "notes": "Added to wedding_members with role='editor'"
+      },
+      "vendor_future": {
+        "description": "Vendor invited to specific wedding (Phase 2)",
+        "permissions": {
+          "weddings": ["read_limited"],
+          "tasks": ["read_assigned_only", "complete_assigned"],
+          "files": ["upload_to_assigned_tasks", "read_relevant_only"],
+          "members": ["view_only"],
+          "settings": ["none"]
+        }
+      }
+    }
+  },
+
+  "wedding_creation_flows": {
+    "template_based": {
+      "description": "Pre-built task lists for common wedding timelines",
+      "templates": [
+        {
+          "name": "6-Month Timeline",
+          "tasks_count": "~40 tasks",
+          "milestones": ["6mo out", "3mo out", "1mo out", "1wk out", "day of"],
+          "example_tasks": [
+            "Book venue (6mo)",
+            "Send invitations (3mo)",
+            "Final headcount (1mo)",
+            "Rehearsal dinner (1wk)"
+          ]
+        },
+        {
+          "name": "Destination Wedding",
+          "tasks_count": "~50 tasks",
+          "focus": "Travel logistics, international vendors, guest accommodations"
+        },
+        {
+          "name": "Intimate Ceremony",
+          "tasks_count": "~25 tasks",
+          "focus": "Simplified for small weddings (<50 guests)"
+        }
+      ],
+      "customization": "All templates editable after creation - add/remove/modify tasks"
+    },
+    "blank_canvas": {
+      "description": "Start with empty wedding, manually add all tasks",
+      "use_case": "Experienced planners or unique wedding formats"
+    },
+    "ai_enhancement_phase_3": {
+      "description": "AI assistant for planners",
+      "features": [
+        "Natural language vendor search ('Find affordable DJs in Seattle')",
+        "Task recommendations based on wedding date/type",
+        "Auto-generate timeline from wedding date",
+        "Budget allocation suggestions"
+      ]
+    }
+  },
+
+  "invitation_system": {
+    "magic_link_tokens": {
+      "description": "Frictionless onboarding via unique URLs",
+      "implementation": {
+        "generation": "Server generates UUID token, stores in DB with metadata",
+        "format": "https://amari.app/invite?token=abc123&role=couple&wedding_id=xyz",
+        "expiration": "7 days (configurable)",
+        "single_use": "Token invalidated after first use"
+      },
+      "flow": [
+        "Planner clicks 'Invite Couple' in wedding settings",
+        "System generates token, sends email with magic link",
+        "Couple clicks link → lands on signup/login page",
+        "After auth, token auto-adds them to wedding_members",
+        "Redirect to wedding dashboard"
+      ],
+      "advantages": [
+        "No pre-registration required",
+        "Works even if couple email already exists",
+        "Secure (UUID + expiration)",
+        "Can regenerate if lost/expired"
+      ]
+    },
+    "email_invitations": {
+      "template": "Warm, branded email with CTA button",
+      "from": "notifications@amari.app (or planner's custom domain Phase 3)",
+      "subject": "[Planner Name] invited you to collaborate on [Wedding Name]",
+      "fallback": "If email fails, planner can copy/share link manually"
+    }
+  },
+
+  "task_workflows": {
+    "creation": {
+      "who_can_create": ["owner", "editor (couple in client mode can create suggestions)"],
+      "fields": [
+        "Title (required)",
+        "Description (optional)",
+        "Status (todo/in-progress/completed)",
+        "Assignee (optional)",
+        "Due date (optional)",
+        "Priority (low/medium/high)"
+      ]
+    },
+    "assignment": {
+      "model": "Collaborative with owner approval",
+      "flow": [
+        "Anyone can suggest assignee when creating task",
+        "Owner/planner must approve assignment",
+        "Assignee receives notification (email)"
+      ],
+      "self_assignment": "Allowed for all members with editor+ permissions"
+    },
+    "completion": {
+      "who_can_complete": ["assignee", "owner", "planner"],
+      "workflow": "Click 'Mark Complete' → status changes → owner notified"
+    },
+    "views": {
+      "kanban": "Default view - columns by status (todo/in-progress/completed)",
+      "list": "Alternative - grouped by due date or priority",
+      "calendar": "Phase 2 - visual timeline view"
+    }
+  },
+
+  "file_workflows": {
+    "upload_contexts": {
+      "option_1_task_attachment": {
+        "description": "Attach file to specific task",
+        "use_case": "Venue contract → 'Book Venue' task",
+        "technical": "files.task_id populated"
+      },
+      "option_2_general_library": {
+        "description": "Upload to wedding's general file library",
+        "use_case": "Inspiration photos, mood boards",
+        "technical": "files.task_id is NULL"
+      }
+    },
+    "permissions": {
+      "upload": ["owner", "editor (couple client)", "planner"],
+      "view": ["all wedding members"],
+      "delete": ["owner", "planner", "uploader (can delete own files)"]
+    },
+    "storage": {
+      "backend": "Supabase Storage",
+      "bucket": "wedding-files",
+      "limits": {
+        "max_file_size": "10MB (MVP), 50MB (Phase 2)",
+        "allowed_types": ["images (jpg/png)", "PDFs", "docs (docx/xlsx)"]
+      }
+    }
+  },
+
+  "communication_strategy": {
+    "philosophy": "Encourage external communication (email/text) to reduce in-app complexity",
+    "mvp_approach": {
+      "in_app": "None - no chat or messaging",
+      "notifications": "Email notifications only for key events",
+      "collaboration": "Users coordinate via external channels (phone, email, text)"
+    },
+    "phase_2_consideration": {
+      "task_comments": "Add lightweight comment threads on tasks (like Asana)",
+      "no_general_chat": "Still avoid real-time chat/messaging"
+    },
+    "rationale": [
+      "Reduces development complexity",
+      "Users already have preferred communication tools",
+      "Weddings are emotional - personal touch via phone/text is better",
+      "Avoids need for real-time infrastructure in MVP"
+    ]
+  },
+
+  "notification_system": {
+    "delivery_method": "Email only (MVP)",
+    "triggers": {
+      "high_priority": [
+        {
+          "event": "Task assigned to you",
+          "recipient": "Assignee",
+          "timing": "Immediate"
+        },
+        {
+          "event": "Task due in 3 days",
+          "recipient": "Assignee",
+          "timing": "Daily digest at 9am"
+        },
+        {
+          "event": "Wedding date in 1 month",
+          "recipient": "All wedding members",
+          "timing": "One-time milestone alert"
+        },
+        {
+          "event": "New member invited to wedding",
+          "recipient": "Wedding owner",
+          "timing": "Immediate"
+        }
+      ],
+      "medium_priority": [
+        {
+          "event": "Task completed",
+          "recipient": "Wedding owner/planner",
+          "timing": "Daily digest"
+        },
+        {
+          "event": "File uploaded",
+          "recipient": "Wedding owner",
+          "timing": "Daily digest"
+        }
+      ],
+      "low_priority": [
+        {
+          "event": "Task status changed",
+          "recipient": "Wedding owner",
+          "timing": "Weekly summary"
+        }
+      ]
+    },
+    "user_preferences": {
+      "phase_2": "Allow users to customize notification frequency",
+      "options": ["Real-time", "Daily digest", "Weekly summary", "Off"]
+    },
+    "technical": {
+      "service": "Supabase Edge Functions + Resend (email service)",
+      "templates": "Branded HTML emails with Amari design system"
+    }
+  },
+
+  "vendor_marketplace": {
+    "description": "Directory model for planners to discover vendors (like Airbnb)",
+    "mvp_scope": "Phase 2/3 - not in initial MVP",
+    "vendor_profile_structure": {
+      "basic_info": [
+        "Business name",
+        "Category (photographer, caterer, florist, DJ, etc.)",
+        "Location (city/state)",
+        "Contact (email, phone, website)"
+      ],
+      "showcase": [
+        "Portfolio (image gallery)",
+        "Services offered",
+        "Pricing tiers",
+        "Availability calendar"
+      ],
+      "social_proof": [
+        "Reviews/ratings from planners",
+        "Number of weddings completed",
+        "Certifications/awards"
+      ]
+    },
+    "planner_features": {
+      "search": "Filter by category, location, price, availability",
+      "ai_recommendations_phase_3": "Natural language search ('Find DJs in Austin under $2k')",
+      "save_favorites": "Bookmark vendors for future reference",
+      "comparison": "Side-by-side comparison of 2-3 vendors"
+    },
+    "vendor_wedding_integration": {
+      "phase_2": "Planners can invite vendors to specific weddings",
+      "permissions": "Vendors get limited 'viewer' access to relevant tasks only",
+      "use_case": "Photographer can see timeline, upload proofs, mark 'Engagement shoot' task complete"
+    }
+  },
+
+  "edge_cases_and_considerations": {
+    "scenario_1": {
+      "situation": "Couple creates wedding, then wants to hire planner mid-project",
+      "solution": "Couple invites planner as 'editor', can optionally transfer ownership later (Phase 2 feature)"
+    },
+    "scenario_2": {
+      "situation": "Planner accidentally deletes wedding",
+      "solution": "Soft delete + 30-day recovery period (Phase 2)"
+    },
+    "scenario_3": {
+      "situation": "Couple breaks up, wedding cancelled",
+      "solution": "Owner can change status to 'cancelled', archive wedding (still accessible, read-only)"
+    },
+    "scenario_4": {
+      "situation": "User has both planner and couple accounts (manages business + own wedding)",
+      "solution": "System allows multiple roles, dashboard shows 'My Weddings' (owned) + 'Planning' (as planner) tabs"
+    },
+    "scenario_5": {
+      "situation": "Magic link expires before couple clicks",
+      "solution": "Planner can regenerate from wedding settings → 'Manage Members' → 'Resend Invite'"
+    }
+  },
+
+  "implementation_priorities": {
+    "phase_1_mvp": [
+      "Journey 1: Planner creates wedding, invites couple (magic links)",
+      "Journey 2: Couple self-planning (basic create wedding)",
+      "Template-based + blank canvas wedding creation",
+      "Task CRUD with Kanban board view",
+      "File upload (both contexts)",
+      "Email notifications (high-priority triggers only)",
+      "Permissions enforcement (owner vs editor)"
+    ],
+    "phase_2": [
+      "Journey 3: Vendor marketplace (directory only, no wedding integration)",
+      "Task comments (lightweight collaboration)",
+      "Calendar view for tasks",
+      "Transfer ownership feature",
+      "Vendor profiles and search"
+    ],
+    "phase_3": [
+      "AI vendor recommendations",
+      "Vendor wedding integration (limited access)",
+      "AI task generation from wedding details",
+      "Advanced notification preferences",
+      "Analytics dashboard for planners"
+    ]
+  },
+
+  "definition_of_done": {
+    "user_flows": [
+      "All MVP journeys documented with step-by-step flows",
+      "Edge cases identified and solutions proposed",
+      "Permissions matrix clearly defines role capabilities",
+      "Technical implementation notes included"
+    ],
+    "validation": [
+      "Flows align with constitution principles (simplicity, human-centered)",
+      "Database schema supports all described interactions",
+      "No blocking dependencies on unplanned features"
+    ]
+  },
+
+  "metadata": {
+    "author": "Gabriel Cabrera",
+    "version": "1.0",
+    "last_updated": "2025-11-09",
+    "related_documents": [
+      "constitution.json",
+      "design-context.json",
+      "db/schema.sql"
+    ]
+  }
+}
