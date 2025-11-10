@@ -1,0 +1,234 @@
+{
+  "name": "Amari Development Constitution",
+  "version": "1.0",
+  "description": "A guiding document for AI-assisted development and autonomous reasoning for the Amari wedding planning platform.",
+  
+  "purpose": {
+    "goal": "Autonomously design, build, and iterate on a lightweight project-management web app for wedding planning",
+    "inspiration": "Modeled after ClickUp or Jira — but tailored for planners and couples",
+    "features": [
+      "User accounts (Planner, Couple, Vendor)",
+      "Wedding 'projects' with tasks, uploads, and communication",
+      "Scalable SaaS architecture for future monetization"
+    ]
+  },
+
+  "guiding_philosophy": [
+    {
+      "principle": "Simplicity First",
+      "description": "Favor minimal, maintainable code"
+    },
+    {
+      "principle": "Progressive Enhancement",
+      "description": "Functional MVP before advanced UX"
+    },
+    {
+      "principle": "Reusability",
+      "description": "Modular, composable components"
+    },
+    {
+      "principle": "Human-Centered Design",
+      "description": "Clarity and empathy for users planning emotionally charged events"
+    },
+    {
+      "principle": "Autonomous Iteration",
+      "description": "Each generated module documents its intent and decisions"
+    }
+  ],
+
+  "core_objectives": {
+    "primary_stack": {
+      "framework": "Next.js + Supabase",
+      "features": [
+        "Authentication and role-based permissions",
+        "Project creation (Wedding Workspaces)",
+        "Task boards (Kanban or List)",
+        "Image uploads",
+        "Notifications (Realtime or Email)"
+      ]
+    },
+    "required_components": {
+      "ui": "Responsive UI (TailwindCSS + Shadcn/UI)",
+      "structure": "Scalable folder structure (/components, /lib, /db, /hooks)",
+      "api": "CRUD API routes for weddings, tasks, comments, files"
+    },
+    "future_integrations": [
+      "Stripe billing (SaaS)",
+      "Calendar sync (Google / Outlook)",
+      "AI task assistant"
+    ]
+  },
+
+  "architecture": {
+    "layers": [
+      {
+        "layer": "Frontend",
+        "tools": "Next.js + Tailwind + Shadcn",
+        "responsibility": "UI components, routing, state"
+      },
+      {
+        "layer": "Backend",
+        "tools": "Supabase",
+        "responsibility": "Auth, Postgres DB, file storage, realtime"
+      },
+      {
+        "layer": "API Layer",
+        "tools": "Next.js API Routes / Supabase Edge Functions",
+        "responsibility": "CRUD operations"
+      },
+      {
+        "layer": "Database Schema",
+        "tools": "Postgres",
+        "responsibility": "users, weddings, tasks, files, messages, roles"
+      },
+      {
+        "layer": "Notifications",
+        "tools": "Supabase Realtime / OneSignal",
+        "responsibility": "Event-based alerts"
+      },
+      {
+        "layer": "Hosting",
+        "tools": "Vercel + Supabase",
+        "responsibility": "Managed deployment"
+      },
+      {
+        "layer": "Testing",
+        "tools": "Jest / Playwright",
+        "responsibility": "Unit + e2e testing"
+      }
+    ]
+  },
+
+  "decision_making_hierarchy": [
+    "Follow the Constitution",
+    "Default to Simplicity",
+    "Prioritize UX Clarity",
+    "Optimize for Scalability",
+    "Document every major decision inside the module header"
+  ],
+
+  "data_model": {
+    "users": {
+      "columns": [
+        { "name": "id", "type": "UUID", "constraint": "PRIMARY KEY" },
+        { "name": "email", "type": "TEXT", "constraint": "UNIQUE NOT NULL" },
+        { "name": "role", "type": "TEXT", "constraint": "CHECK (role IN ('planner','couple','vendor'))" },
+        { "name": "created_at", "type": "TIMESTAMP", "default": "now()" }
+      ]
+    },
+    "weddings": {
+      "columns": [
+        { "name": "id", "type": "UUID", "constraint": "PRIMARY KEY" },
+        { "name": "name", "type": "TEXT", "constraint": "NOT NULL" },
+        { "name": "date", "type": "DATE" },
+        { "name": "owner_id", "type": "UUID", "constraint": "REFERENCES users(id)" },
+        { "name": "status", "type": "TEXT", "default": "'planning'" }
+      ]
+    },
+    "tasks": {
+      "columns": [
+        { "name": "id", "type": "UUID", "constraint": "PRIMARY KEY" },
+        { "name": "wedding_id", "type": "UUID", "constraint": "REFERENCES weddings(id)" },
+        { "name": "title", "type": "TEXT", "constraint": "NOT NULL" },
+        { "name": "description", "type": "TEXT" },
+        { "name": "status", "type": "TEXT", "default": "'todo'" },
+        { "name": "assignee", "type": "UUID", "constraint": "REFERENCES users(id)" },
+        { "name": "due_date", "type": "DATE" },
+        { "name": "created_at", "type": "TIMESTAMP", "default": "now()" }
+      ]
+    },
+    "files": {
+      "columns": [
+        { "name": "id", "type": "UUID", "constraint": "PRIMARY KEY" },
+        { "name": "wedding_id", "type": "UUID", "constraint": "REFERENCES weddings(id)" },
+        { "name": "uploader", "type": "UUID", "constraint": "REFERENCES users(id)" },
+        { "name": "url", "type": "TEXT", "constraint": "NOT NULL" },
+        { "name": "created_at", "type": "TIMESTAMP", "default": "now()" }
+      ]
+    }
+  },
+
+  "context_feeding_logic": {
+    "requirements": [
+      "Load the Constitution before coding sessions",
+      "Receive current phase, component name, and priority list as prompts",
+      "Produce documented code with rationale for design choices",
+      "Respect simplicity, clarity, and maintainability"
+    ],
+    "example_directive": "You are building the TaskBoard.tsx component for Amari. Follow the Constitution. Implement a Kanban board using Shadcn components and Supabase data. Keep code <200 lines. Include comments for decisions."
+  },
+
+  "phased_development_plan": {
+    "phase_1_mvp": {
+      "name": "MVP",
+      "features": [
+        "Auth + roles",
+        "Create/manage wedding projects",
+        "Task CRUD + board UI",
+        "File upload",
+        "Notifications",
+        "Dashboard UI"
+      ]
+    },
+    "phase_2_collaboration": {
+      "name": "Collaboration Layer",
+      "features": [
+        "Comments & chat",
+        "Role-based views",
+        "Shared timelines",
+        "Vendor invites"
+      ]
+    },
+    "phase_3_saas": {
+      "name": "SaaS Expansion",
+      "features": [
+        "Stripe billing",
+        "Admin portal for planners",
+        "AI 'auto wedding plan' assistant"
+      ]
+    }
+  },
+
+  "ai_behavior_rules": [
+    "No unnecessary dependencies",
+    "Document every new function (inputs, outputs, side effects)",
+    "Validate and sanitize user input",
+    "Use accessible, responsive UI (ARIA + Tailwind best practices)",
+    "Create reusable logic hooks (useTasks, useWeddings, useUploads)",
+    "Ensure each commit builds and runs locally without manual config"
+  ],
+
+  "definition_of_done": {
+    "criteria": [
+      "Functional, accessible, documented, and tested",
+      "Lighthouse accessibility ≥ 90%",
+      "Code follows naming conventions and structure",
+      "Commit message uses conventional commits"
+    ]
+  },
+
+  "references": [
+    {
+      "name": "Next.js Docs",
+      "url": "https://nextjs.org/docs"
+    },
+    {
+      "name": "Supabase Docs",
+      "url": "https://supabase.com/docs"
+    },
+    {
+      "name": "Shadcn/UI",
+      "url": "https://ui.shadcn.com"
+    },
+    {
+      "name": "Stripe Dev",
+      "url": "https://stripe.com/docs"
+    }
+  ],
+
+  "metadata": {
+    "author": "Gabriel Cabrera",
+    "version": "1.0",
+    "license": "Open for internal AI-assisted development of Amari"
+  }
+}
