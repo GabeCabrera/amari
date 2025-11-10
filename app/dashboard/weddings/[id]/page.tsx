@@ -6,8 +6,9 @@ import { Calendar, MapPin, Users, CheckCircle2, Clock, AlertCircle } from 'lucid
 export default async function WeddingDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const supabase = await createClient();
   
   const { data: { user }, error: authError } = await supabase.auth.getUser();
@@ -20,7 +21,7 @@ export default async function WeddingDetailPage({
   const { data: wedding, error: weddingError } = await supabase
     .from('weddings')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .single();
 
   if (weddingError || !wedding) {
@@ -32,7 +33,7 @@ export default async function WeddingDetailPage({
   const { data: membership } = await supabase
     .from('wedding_members')
     .select('*')
-    .eq('wedding_id', params.id)
+    .eq('wedding_id', id)
     .eq('user_id', user.id)
     .single();
 
@@ -47,7 +48,7 @@ export default async function WeddingDetailPage({
       *,
       assignee:users(full_name, email)
     `)
-    .eq('wedding_id', params.id)
+    .eq('wedding_id', id)
     .order('created_at', { ascending: false });
 
   const tasksByStatus = {
