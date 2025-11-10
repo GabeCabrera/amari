@@ -35,62 +35,65 @@ export default async function DashboardPage() {
     .order('created_at', { ascending: false });
 
   return (
-    <div className="max-w-7xl mx-auto">
-      <header className="mb-8 flex items-center justify-between">
+    <div className="max-w-7xl mx-auto animate-fade-in">
+      <header className="mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div>
-          <h1 className="text-4xl font-serif font-semibold text-[#2E2E2E]">
+          <h1 className="text-4xl md:text-5xl font-serif font-semibold text-[#2E2E2E] mb-2">
             Welcome back, {profile?.full_name || 'there'}!
           </h1>
-          <p className="text-[#6E6E6E] mt-2">
-            <span className="capitalize font-medium text-[#2E2E2E]">{profile?.role}</span> account
+          <p className="text-[#6E6E6E]">
+            <span className="inline-flex items-center px-3 py-1 rounded-full bg-[#E6D9FF]/50 text-[#2E2E2E] font-medium capitalize text-sm">
+              {profile?.role} account
+            </span>
           </p>
         </div>
         <Button 
           asChild
-          className="bg-[#EFB7B7] hover:bg-[#F5C16C] text-[#2E2E2E] font-medium transition-colors"
+          className="bg-[#EFB7B7] hover:bg-[#F5C16C] text-[#2E2E2E] font-medium rounded-xl px-6 py-6 transition-all duration-200 hover:scale-105 shadow-lg border-0"
         >
           <Link href="/dashboard/weddings/new">
-            <Plus className="mr-2 h-4 w-4" />
+            <Plus className="mr-2 h-5 w-5" />
             New Wedding
           </Link>
         </Button>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div className="bg-white rounded-lg shadow-sm border border-[#C9D6CF]/30 p-6 hover:shadow-md transition-shadow">
-          <h3 className="text-xl font-semibold text-[#2E2E2E] mb-2">Your Weddings</h3>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+        <div className="glass-card p-6 hover:scale-105 transition-all duration-200 group">
+          <h3 className="text-xl font-semibold text-[#2E2E2E] mb-2 group-hover:text-[#EFB7B7] transition-colors">Your Weddings</h3>
           {weddings && weddings.length > 0 ? (
-            <p className="text-2xl font-bold text-[#EFB7B7]">{weddings.length}</p>
+            <p className="text-3xl font-bold text-[#EFB7B7]">{weddings.length}</p>
           ) : (
             <p className="text-[#6E6E6E]">No weddings yet. Create your first one!</p>
           )}
         </div>
         
-        <div className="bg-white rounded-lg shadow-sm border border-[#C9D6CF]/30 p-6 hover:shadow-md transition-shadow">
-          <h3 className="text-xl font-semibold text-[#2E2E2E] mb-2">Recent Tasks</h3>
+        <div className="glass-card p-6 hover:scale-105 transition-all duration-200 group">
+          <h3 className="text-xl font-semibold text-[#2E2E2E] mb-2 group-hover:text-[#EFB7B7] transition-colors">Recent Tasks</h3>
           <p className="text-[#6E6E6E]">No tasks assigned.</p>
         </div>
         
-        <div className="bg-white rounded-lg shadow-sm border border-[#C9D6CF]/30 p-6 hover:shadow-md transition-shadow">
-          <h3 className="text-xl font-semibold text-[#2E2E2E] mb-2">Upcoming</h3>
+        <div className="glass-card p-6 hover:scale-105 transition-all duration-200 group">
+          <h3 className="text-xl font-semibold text-[#2E2E2E] mb-2 group-hover:text-[#EFB7B7] transition-colors">Upcoming</h3>
           <p className="text-[#6E6E6E]">No upcoming events.</p>
         </div>
       </div>
 
       {weddings && weddings.length > 0 && (
         <div className="mt-8">
-          <h2 className="text-2xl font-serif font-semibold text-[#2E2E2E] mb-4">Your Weddings</h2>
+          <h2 className="text-3xl font-serif font-semibold text-[#2E2E2E] mb-6">Your Weddings</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {weddings.map((wedding) => (
               <Link 
                 key={wedding.id} 
                 href={`/dashboard/weddings/${wedding.id}`}
-                className="block"
+                className="block group"
               >
-                <div className="bg-white rounded-lg shadow-sm border border-[#C9D6CF]/30 p-6 hover:shadow-md hover:border-[#EFB7B7] transition-all">
-                  <h3 className="text-xl font-semibold text-[#2E2E2E] mb-2">{wedding.name}</h3>
+                <div className="glass-card p-6 hover:scale-105 hover:shadow-2xl transition-all duration-200">
+                  <h3 className="text-xl font-semibold text-[#2E2E2E] mb-2 group-hover:text-[#EFB7B7] transition-colors">{wedding.name}</h3>
                   {wedding.date && (
-                    <p className="text-[#6E6E6E] text-sm mb-2">
+                    <p className="text-[#6E6E6E] text-sm mb-2 flex items-center gap-2">
+                      <span className="text-lg">📅</span>
                       {new Date(wedding.date).toLocaleDateString('en-US', { 
                         year: 'numeric', 
                         month: 'long', 
@@ -98,7 +101,7 @@ export default async function DashboardPage() {
                       })}
                     </p>
                   )}
-                  <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-[#C9D6CF]/20 text-[#2E2E2E] capitalize">
+                  <span className="inline-block px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-[#C9D6CF]/30 to-[#E6D9FF]/30 text-[#2E2E2E] capitalize">
                     {wedding.status}
                   </span>
                 </div>

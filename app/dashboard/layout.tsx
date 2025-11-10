@@ -40,30 +40,30 @@ async function DashboardNav() {
     .toUpperCase() || 'U';
 
   return (
-    <nav className="border-b border-[#C9D6CF]/30 bg-white">
+    <nav className="glass-nav sticky top-0 z-50">
       <div className="mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-8">
-            <Link href="/dashboard" className="text-2xl font-serif font-semibold text-[#2E2E2E]">
+            <Link href="/dashboard" className="text-2xl font-serif font-semibold text-[#2E2E2E] hover:text-[#EFB7B7] transition-colors">
               Amari
             </Link>
             <div className="hidden md:flex items-center gap-6">
               <Link 
                 href="/dashboard" 
-                className="text-[#6E6E6E] hover:text-[#2E2E2E] font-medium transition-colors"
+                className="text-[#6E6E6E] hover:text-[#EFB7B7] font-medium transition-all duration-200 px-3 py-2 rounded-lg hover:bg-white/50"
               >
                 Dashboard
               </Link>
               <Link 
                 href="/dashboard/weddings" 
-                className="text-[#6E6E6E] hover:text-[#2E2E2E] font-medium transition-colors"
+                className="text-[#6E6E6E] hover:text-[#EFB7B7] font-medium transition-all duration-200 px-3 py-2 rounded-lg hover:bg-white/50"
               >
                 Weddings
               </Link>
               {profile?.role === 'planner' && (
                 <Link 
                   href="/dashboard/vendors" 
-                  className="text-[#6E6E6E] hover:text-[#2E2E2E] font-medium transition-colors"
+                  className="text-[#6E6E6E] hover:text-[#EFB7B7] font-medium transition-all duration-200 px-3 py-2 rounded-lg hover:bg-white/50"
                 >
                   Vendors
                 </Link>
@@ -74,32 +74,34 @@ async function DashboardNav() {
           <div className="flex items-center gap-4">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-10 w-10 rounded-full">
-                  <Avatar className="h-10 w-10">
-                    <AvatarFallback className="bg-[#EFB7B7] text-[#2E2E2E] font-semibold">
+                <Button variant="ghost" className="relative h-10 w-10 rounded-full hover:scale-110 transition-transform">
+                  <Avatar className="h-10 w-10 ring-2 ring-white/30">
+                    <AvatarFallback className="bg-gradient-to-br from-[#EFB7B7] to-[#F5C16C] text-white font-semibold shadow-lg">
                       {initials}
                     </AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end" forceMount>
+              <DropdownMenuContent className="w-56 glass-card border-white/30" align="end" forceMount>
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium leading-none">{profile?.full_name}</p>
+                    <p className="text-sm font-medium leading-none text-[#2E2E2E]">{profile?.full_name}</p>
                     <p className="text-xs leading-none text-[#6E6E6E]">{user.email}</p>
                     <p className="text-xs leading-none text-[#6E6E6E] mt-1">
-                      <span className="capitalize">{profile?.role}</span>
+                      <span className="capitalize inline-flex items-center px-2 py-0.5 rounded-full bg-[#E6D9FF]/50 text-[#2E2E2E] font-medium">
+                        {profile?.role}
+                      </span>
                     </p>
                   </div>
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
+                <DropdownMenuSeparator className="bg-white/20" />
+                <DropdownMenuItem asChild className="hover:bg-white/50 cursor-pointer">
                   <Link href="/dashboard/settings">Settings</Link>
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
+                <DropdownMenuSeparator className="bg-white/20" />
+                <DropdownMenuItem asChild className="hover:bg-white/50 cursor-pointer">
                   <form action={handleSignOut}>
-                    <button type="submit" className="w-full text-left">
+                    <button type="submit" className="w-full text-left text-[#C97070]">
                       Sign out
                     </button>
                   </form>
@@ -119,9 +121,9 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-[#F8F8F8]">
+    <div className="relative min-h-screen bg-gradient-subtle">
       <DashboardNav />
-      <main className="mx-auto px-6 py-8">
+      <main className="mx-auto px-6 py-8 max-w-7xl">
         {children}
       </main>
     </div>

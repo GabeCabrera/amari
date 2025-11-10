@@ -54,8 +54,15 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#F8F8F8] px-4 py-8">
-      <Card className="w-full max-w-md shadow-sm">
+    <div className="relative flex min-h-screen items-center justify-center px-4 py-8 overflow-hidden">
+      {/* Gradient background */}
+      <div className="absolute inset-0 bg-gradient-romantic animate-gradient-shift" />
+      
+      {/* Floating elements */}
+      <div className="absolute top-20 right-20 w-32 h-32 bg-[#E6D9FF]/10 rounded-full blur-3xl animate-float" />
+      <div className="absolute bottom-20 left-20 w-40 h-40 bg-[#F5C16C]/10 rounded-full blur-3xl animate-float-delayed" />
+      
+      <Card className="relative z-10 w-full max-w-md glass-card border-white/30 animate-fade-in">
         <CardHeader className="space-y-1">
           <CardTitle className="text-3xl font-serif text-[#2E2E2E]">Create an account</CardTitle>
           <CardDescription className="text-[#6E6E6E]">
@@ -65,12 +72,12 @@ export default function SignupPage() {
         <form onSubmit={handleSignup}>
           <CardContent className="space-y-4">
             {error && (
-              <div className="rounded-lg bg-[#C97070]/10 border border-[#C97070] p-3 text-sm text-[#C97070]">
+              <div className="rounded-xl bg-[#C97070]/10 border border-[#C97070]/30 backdrop-blur-sm p-3 text-sm text-[#C97070]">
                 {error}
               </div>
             )}
             <div className="space-y-2">
-              <Label htmlFor="fullName">Full Name</Label>
+              <Label htmlFor="fullName" className="text-[#2E2E2E] font-medium">Full Name</Label>
               <Input
                 id="fullName"
                 type="text"
@@ -79,11 +86,11 @@ export default function SignupPage() {
                 onChange={(e) => setFullName(e.target.value)}
                 required
                 disabled={loading}
-                className="focus:border-[#E6D9FF]"
+                className="glass-input rounded-xl"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-[#2E2E2E] font-medium">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -92,11 +99,11 @@ export default function SignupPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={loading}
-                className="focus:border-[#E6D9FF]"
+                className="glass-input rounded-xl"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="text-[#2E2E2E] font-medium">Password</Label>
               <Input
                 id="password"
                 type="password"
@@ -106,16 +113,16 @@ export default function SignupPage() {
                 required
                 minLength={6}
                 disabled={loading}
-                className="focus:border-[#E6D9FF]"
+                className="glass-input rounded-xl"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="role">I am a...</Label>
+              <Label htmlFor="role" className="text-[#2E2E2E] font-medium">I am a...</Label>
               <Select value={role} onValueChange={(value: any) => setRole(value)} disabled={loading}>
-                <SelectTrigger className="focus:border-[#E6D9FF]">
+                <SelectTrigger className="glass-input rounded-xl">
                   <SelectValue placeholder="Select your role" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="glass-card border-white/30">
                   <SelectItem value="couple">Couple (Planning my own wedding)</SelectItem>
                   <SelectItem value="planner">Planner (Managing client weddings)</SelectItem>
                   <SelectItem value="vendor">Vendor (Service provider)</SelectItem>
@@ -127,7 +134,7 @@ export default function SignupPage() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#EFB7B7] hover:bg-[#F5C16C] text-[#2E2E2E] font-medium transition-colors"
+              className="w-full bg-[#EFB7B7] hover:bg-[#F5C16C] text-[#2E2E2E] font-medium rounded-xl py-6 transition-all duration-200 hover:scale-105 shadow-lg border-0"
             >
               {loading ? 'Creating account...' : 'Sign up'}
             </Button>

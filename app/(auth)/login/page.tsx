@@ -40,8 +40,15 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[#F8F8F8] px-4">
-      <Card className="w-full max-w-md shadow-sm">
+    <div className="relative flex min-h-screen items-center justify-center px-4 overflow-hidden">
+      {/* Gradient background */}
+      <div className="absolute inset-0 bg-gradient-romantic animate-gradient-shift" />
+      
+      {/* Floating elements */}
+      <div className="absolute top-20 left-20 w-32 h-32 bg-[#EFB7B7]/10 rounded-full blur-3xl animate-float" />
+      <div className="absolute bottom-20 right-20 w-40 h-40 bg-[#C9D6CF]/10 rounded-full blur-3xl animate-float-delayed" />
+      
+      <Card className="relative z-10 w-full max-w-md glass-card border-white/30 animate-fade-in">
         <CardHeader className="space-y-1">
           <CardTitle className="text-3xl font-serif text-[#2E2E2E]">Welcome back</CardTitle>
           <CardDescription className="text-[#6E6E6E]">
@@ -51,12 +58,12 @@ export default function LoginPage() {
         <form onSubmit={handleLogin}>
           <CardContent className="space-y-4">
             {error && (
-              <div className="rounded-lg bg-[#C97070]/10 border border-[#C97070] p-3 text-sm text-[#C97070]">
+              <div className="rounded-xl bg-[#C97070]/10 border border-[#C97070]/30 backdrop-blur-sm p-3 text-sm text-[#C97070]">
                 {error}
               </div>
             )}
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email" className="text-[#2E2E2E] font-medium">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -65,11 +72,11 @@ export default function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 disabled={loading}
-                className="focus:border-[#E6D9FF]"
+                className="glass-input rounded-xl"
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password" className="text-[#2E2E2E] font-medium">Password</Label>
               <Input
                 id="password"
                 type="password"
@@ -77,7 +84,7 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 disabled={loading}
-                className="focus:border-[#E6D9FF]"
+                className="glass-input rounded-xl"
               />
             </div>
           </CardContent>
@@ -85,7 +92,7 @@ export default function LoginPage() {
             <Button
               type="submit"
               disabled={loading}
-              className="w-full bg-[#EFB7B7] hover:bg-[#F5C16C] text-[#2E2E2E] font-medium transition-colors"
+              className="w-full bg-[#EFB7B7] hover:bg-[#F5C16C] text-[#2E2E2E] font-medium rounded-xl py-6 transition-all duration-200 hover:scale-105 shadow-lg border-0"
             >
               {loading ? 'Signing in...' : 'Sign in'}
             </Button>
