@@ -41,18 +41,7 @@ export default function SignupPage() {
       if (authError) throw authError;
 
       if (authData.user) {
-        // Create user profile in public.users table
-        const { error: profileError } = await supabase
-          .from('users')
-          .insert({
-            id: authData.user.id,
-            email: email,
-            full_name: fullName,
-            role: role,
-          });
-
-        if (profileError) throw profileError;
-
+        // Profile is automatically created by database trigger
         // Redirect to dashboard
         router.push('/dashboard');
         router.refresh();
